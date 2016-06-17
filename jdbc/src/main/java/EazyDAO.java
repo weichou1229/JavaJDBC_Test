@@ -72,7 +72,7 @@ public class EazyDAO {
     	while(res.next()){
     		ResultSetMetaData metaData = res.getMetaData();
     		for(int i=1 ;i<=metaData.getColumnCount() ;i++){
-    			System.out.print("欄位:"+metaData.getColumnName(i)+" 型態:"+metaData.getColumnTypeName(i)+" 值 :");
+    			System.out.print("column:"+metaData.getColumnName(i)+" ,type:"+metaData.getColumnTypeName(i)+" ,value:");
     			System.out.print(metaData.getColumnTypeName(i).contains("INT")? res.getInt(metaData.getColumnName(i)):res.getString(metaData.getColumnName(i)));
     			System.out.println();
     		}
