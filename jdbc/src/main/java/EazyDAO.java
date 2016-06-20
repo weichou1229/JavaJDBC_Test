@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 
 /*
@@ -14,16 +13,40 @@ import java.util.ResourceBundle;
  * @author bruce.huang, @date 2016/6/17 上午 11:55
  */
 public class EazyDAO {
+	//==========================PRODUCT==========================
 	private final String DROP_PRODUCT = "DROP TABLE PRODUCT ; " ;
 	private final String CREATE_PRODUCT = 
 			"CREATE TABLE IF NOT EXISTS PRODUCT ( " + 
 				 "PRODUCT_ID bigint NOT NULL AUTO_INCREMENT," +
-				 "NAME varchar(255) NOT NULL," +
+				 "NAME varchar(50) NOT NULL," +
 				 "PRICE int NOT NULL" +
         	")"; 
 	private final String INSERT_PRODUCT1 = "INSERT INTO PRODUCT(NAME,PRICE)VALUES('PRODUCT~A','166')" ;
 	private final String INSERT_PRODUCT2 = "INSERT INTO PRODUCT(NAME,PRICE)VALUES('PRODUCT~B','255')" ;
 	
+	//==========================BILL==========================
+	private final String DROP_BILL = "DROP TABLE IF EXISTS BILL ; " ;
+	private final String CREATE_BILL = 
+			"CREATE TABLE IF NOT EXISTS BILL ( " + 
+				 "BILL_ID bigint NOT NULL AUTO_INCREMENT," +
+				 "CREATE_ID varchar(50) NOT NULL," +
+				 "CREATE_DATE datetime NOT NULL" +
+        	")"; 
+	private final String INSERT_BILL1 = "INSERT INTO BILL(CREATE_ID,CREATE_DATE)VALUES('PETER',NOW())" ;
+	private final String INSERT_BILL2 = "INSERT INTO BILL(CREATE_ID,CREATE_DATE)VALUES('BRUCE',NOW())" ;
+	
+	//==========================BILL DETAIL==========================
+	private final String DROP_BILL_DETAIL = "DROP TABLE IF EXISTS BILL_DETAIL ; " ;
+	private final String CREATE_BILL_DETAIL = 
+			"CREATE TABLE IF NOT EXISTS BILL_DETAIL ( " + 
+				 "BILL_DETAIL_ID bigint NOT NULL AUTO_INCREMENT," +
+				 "PRODUCT_ID varchar(50) NOT NULL," +
+				 "AMOUNT INT NOT NULL," +
+				 "CREATE_ID varchar(50) NOT NULL," +
+				 "CREATE_DATE datetime NOT NULL" +
+        	")"; 
+	private final String INSERT_BILL_DETAIL1 = "INSERT INTO BILL_DETAIL(CREATE_ID,CREATE_DATE)VALUES('PETER',NOW())" ;
+	private final String INSERT_BILL_DETAIL2 = "INSERT INTO BILL_DETAIL(CREATE_ID,CREATE_DATE)VALUES('BRUCE',NOW())" ;	
 	
 	
 	
@@ -48,10 +71,7 @@ public class EazyDAO {
 		}	
 	}
 
-	private void initBill() {
-		// TODO Auto-generated method stub
-		
-	}
+
 	private void initProduct() throws SQLException {
     	ResultSet res = null ;
     	ResultSet rr  = null ;
@@ -79,6 +99,35 @@ public class EazyDAO {
     		}
     		System.out.println("==================");
     	}
+	}
+	private void initBill()throws SQLException {
+    	ResultSet res = null ;
+    	ResultSet rr  = null ;
+    	//init product
+    	conn.prepareStatement(DROP_BILL).execute();					//drop
+    	conn.prepareStatement(CREATE_BILL).execute();				//create
+    	
+    	conn.prepareStatement(INSERT_BILL1).execute();				//insert A
+    	
+    	PreparedStatement st = conn.prepareStatement(INSERT_BILL2);	//insert B
+    	st.execute();
+    	rr = st.getGeneratedKeys();										//取得當前的key	裡面只有   欄位:SCOPE_IDENTITY() 型態 BIGINT 數值2(新增了兩筆,所以產生到2)
+    	rr.next();
+    	String pk = rr.getString(1);									//B的pk值
+    	System.out.println(pk);
+    	
+    	
+    	res = conn.prepareStatement("SELECT * FROM BILL").executeQuery();	//get All test data
+    	while(res.next()){
+    		ResultSetMetaData metaData = res.getMetaData();
+    		for(int i=1 ;i<=metaData.getColumnCount() ;i++){
+    			System.out.print("column:"+metaData.getColumnName(i)+" ,type:"+metaData.getColumnTypeName(i)+" ,value:");
+    			System.out.print(metaData.getColumnTypeName(i).contains("INT")? res.getInt(metaData.getColumnName(i)):res.getString(metaData.getColumnName(i)));
+    			System.out.println();
+    		}
+    		System.out.println("==================");
+    	}
+		
 	}
     private void initBillDetail() {
 		
