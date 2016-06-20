@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +37,7 @@ public class JdbcTemplateTest {
 	private final String INSERT_PRODUCT1 = "INSERT INTO PRODUCT(NAME,PRICE)VALUES('PRODUCT~A','166')" ;
 	private final String INSERT_PRODUCT2 = "INSERT INTO PRODUCT(NAME,PRICE)VALUES('PRODUCT~B','255')" ;
 	
-	@BeforeClass
+	@Before
 	public void setup(){
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
     	jdbcTemplate.execute(DROP_PRODUCT);
@@ -46,8 +47,9 @@ public class JdbcTemplateTest {
 	}
 	
     @Test public void testQueryList() {
+    	//Act
     	List<Map<String, Object>> products = jdbcTemplate.queryForList("SELECT * FROM PRODUCT");
-    	 System.out.println(products);
-    	
+    	//Assert
+    	assertTrue("should have two product", products.size()==2);
     }
 }
