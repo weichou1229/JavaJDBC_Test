@@ -38,7 +38,7 @@ public class EazyDAO {
     	String jdbc_password = dbConfigs.getString("jdbc_password");
 		try {
 			Class.forName(jdbc_driveClass);
-			conn = DriverManager.getConnection(jdbc_url, jdbc_username , jdbc_password );
+			this.conn = DriverManager.getConnection(jdbc_url, jdbc_username , jdbc_password );
 			
 			initProduct();
 			initBill();
@@ -65,7 +65,8 @@ public class EazyDAO {
     	st.execute();
     	rr = st.getGeneratedKeys();										//取得當前的key	裡面只有   欄位:SCOPE_IDENTITY() 型態 BIGINT 數值2(新增了兩筆,所以產生到2)
     	rr.next();
-    	System.out.println(rr.getString(1));
+    	String pk = rr.getString(1);									//B的pk值
+    	System.out.println(pk);
     	
     	
     	res = conn.prepareStatement("SELECT * FROM PRODUCT").executeQuery();	//get All test data
