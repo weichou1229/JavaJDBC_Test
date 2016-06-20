@@ -54,7 +54,8 @@ public class JdbcTemplateTest {
     	assertTrue("should have two product", products.size()==2);
     }
     
-    @Test public void testQueryListObject() {
+    @SuppressWarnings("unchecked")
+	@Test public void testQueryListObject() {
     	//Act
     	List<Product> products = jdbcTemplate.query("SELECT * FROM PRODUCT", new BeanPropertyRowMapper(Product.class));
     	//Assert
