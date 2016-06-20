@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -46,10 +47,20 @@ public class JdbcTemplateTest {
     	jdbcTemplate.execute(INSERT_PRODUCT2);
 	}
 	
-    @Test public void testQueryList() {
+    @Test public void testQueryListMap() {
     	//Act
     	List<Map<String, Object>> products = jdbcTemplate.queryForList("SELECT * FROM PRODUCT");
     	//Assert
     	assertTrue("should have two product", products.size()==2);
+    }
+    
+    @Test public void testQueryListObject() {
+    	//Act
+    	List<Product> products = jdbcTemplate.query("SELECT * FROM PRODUCT", new BeanPropertyRowMapper(Product.class));
+    	//Assert
+    	assertTrue("should have two product", products.size()==2);
+    	for(Product product : products){
+    		System.out.println(product);
+    	}
     }
 }
