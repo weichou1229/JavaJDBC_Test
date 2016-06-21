@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +39,7 @@ public class JdbcTemplateTest {
 	
 	@Before
 	public void setup(){
+		System.out.println("setup...");
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
     	jdbcTemplate.execute(DROP_PRODUCT);
     	jdbcTemplate.execute(CREATE_PRODUCT);
@@ -48,6 +48,7 @@ public class JdbcTemplateTest {
 	}
 	
     @Test public void testQueryListMap() {
+    	System.out.println("testQueryListMap...");
     	//Act
     	List<Map<String, Object>> products = jdbcTemplate.queryForList("SELECT * FROM PRODUCT");
     	//Assert
@@ -56,6 +57,7 @@ public class JdbcTemplateTest {
     
     @SuppressWarnings("unchecked")
 	@Test public void testQueryListObject() {
+    	System.out.println("testQueryListObject...");
     	//Act
     	List<Product> products = jdbcTemplate.query("SELECT * FROM PRODUCT", new BeanPropertyRowMapper(Product.class));
     	//Assert
