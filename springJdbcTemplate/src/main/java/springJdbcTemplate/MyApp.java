@@ -12,8 +12,8 @@ public class MyApp {
 		List<Product> products = null;
         ApplicationContext ctx = new ClassPathXmlApplicationContext("driverManagerDataSource.xml");
         ProductDAO productDAO = (ProductDAO) ctx.getBean("productDAO");
-        //productDAO.drop();
-        //productDAO.create();
+        productDAO.drop();
+        productDAO.create();
         products = productDAO.getAll();
         for(Product product : products) System.out.println(product);
         productDAO.insert();
