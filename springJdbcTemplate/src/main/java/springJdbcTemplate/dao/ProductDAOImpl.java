@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import springJdbcTemplate.Product;
-
+@Transactional
 public class ProductDAOImpl implements ProductDAO {
 	private JdbcTemplate jdbcTemplate; 
 	
@@ -39,11 +40,12 @@ public class ProductDAOImpl implements ProductDAO {
 	public void create() {
 		jdbcTemplate.execute(CREATE_PRODUCT);
 	}
-
+	
 	@Override
 	public void insert() {
 		jdbcTemplate.execute(INSERT_PRODUCT1);
 		jdbcTemplate.execute(INSERT_PRODUCT2);
+		throw new RuntimeException();
 	}
 
 	@Override
