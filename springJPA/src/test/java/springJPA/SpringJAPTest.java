@@ -1,4 +1,4 @@
-package springJPA.springJPA;
+package springJPA;
 
 import static org.junit.Assert.*;
 
