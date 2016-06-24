@@ -25,7 +25,8 @@ public class ProductDAOImpl implements ProductDAO {
 
 	}
 	
-	@Override @Transactional
+	@Override 
+	@Transactional
 	public void insert() {
 		EntityManager em = this.emf.createEntityManager();
 		em.persist(new Product("test_productA", 123));

@@ -18,6 +18,9 @@ public class MyApp {
         productDAO.insert();
         products = productDAO.getAll();
         for(Product product : products) System.out.println(product);
+        
+
+
 	}
 
 }
