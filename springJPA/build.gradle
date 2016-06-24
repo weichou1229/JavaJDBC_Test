@@ -11,10 +11,6 @@ targetCompatibility = 1.7
 repositories {
     jcenter()
 }
-dependencies {
-
-	testCompile group: 'junit', name: 'junit', version: '4.+'
-}
 
 sourceSets {
     main {
@@ -25,4 +21,19 @@ sourceSets {
     	java {srcDir 'src/test/java'}
         resources {srcDir 'src/test/resources'}
     }
+}
+
+dependencies {
+	testCompile group: 'junit', name: 'junit', version: '4.+'
+	testCompile group: 'org.springframework', name: 'spring-test', version: '4.2.6.RELEASE'
+	
+	compile 'com.h2database:h2:1.4.192'
+	
+	compile group: 'org.springframework', name: 'spring-context', version: '4.2.6.RELEASE'
+	compile group: 'org.springframework', name: 'spring-orm', version: '4.2.6.RELEASE'
+	
+	compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
+	compile group: 'log4j', name: 'log4j', version: '1.2.17'
+	
+	
 }
